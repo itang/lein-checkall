@@ -1,28 +1,28 @@
 (ns leiningen.checkall
-  (:require [leinjacker.eval :refer [eval-in-project]]
-            [leiningen.checkall-helper :refer :all]))
+  (:require [clojure.string :as str]
+            [leiningen.check :refer [check]]
+            [leiningen.kibit :refer [kibit]]
+            [leiningen.eastwood :refer [eastwood]]
+            [leiningen.bikeshed :refer [bikeshed]]))
 
-(defn- add-deps [project]
-  (add-dep project '[lein-kibit "0.0.8"])
-  (add-dep project '[jonase/eastwood "0.0.2"])
-  (add-dep project '[lein-bikeshed "0.1.0"]))
+(defn- print-line [s ft]
+  (println (str (when-not ft "\n\n\n")
+             s
+             (str/join "" (repeat (- 70 (count s)) "=")))))
 
-(defn- do-checks []
-  (println "[run lein check]")
-  (lein "check")
+(defn- do-check [project msg check-fn & {:keys [first?] :or {first? false}}]
+  (print-line msg first?)
+  (check-fn project)
+  project)
 
-  (println "[run lein kibit]")
-  (lein "kibit")
-
-  (println "[run lein eastwood]")
-  (lein "eastwood")
-
-  (println "[run lein bikeshed]")
-  (lein "bikeshed"))
+(defn- do-checks [project]
+  (-> project
+    (do-check "[lein check]" check :first? true)
+    (do-check "[lein kibit]" kibit)
+    (do-check "[lein eastwood]" eastwood)
+    (do-check "[lein bikeshed]" bikeshed)))
 
 (defn checkall
   "lein check && lein kibit && lein eastwood && lein bikeshed"
   [project & args]
-  (eval-in-project 
-    (add-deps project)
-    (do-checks)))
+  (do-checks project))
