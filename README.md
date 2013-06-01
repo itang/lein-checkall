@@ -8,13 +8,13 @@ A Leiningen plugin to do many wonderful things.
 
 Use this for user-level plugins:
 
-Put `[lein-checkall "0.1.0-SNAPSHOT"]` into the `:plugins` vector of your
+Put `[lein-checkall "0.1.1"]` into the `:plugins` vector of your
 `:user` profile, or if you are on Leiningen 1.x do `lein plugin install
-lein-checkall 0.1.0-SNAPSHOT`.
+lein-checkall 0.1.1`.
 
 Use this for project-level plugins:
 
-Put `[lein-checkall "0.1.0-SNAPSHOT"]` into the `:plugins` vector of your project.clj.
+Put `[lein-checkall "0.1.1"]` into the `:plugins` vector of your project.clj.
 
 and add an example usage that actually makes sense:
 
