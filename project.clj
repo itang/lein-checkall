@@ -1,4 +1,4 @@
-(defproject lein-checkall "0.1"
+(defproject lein-checkall "0.1.1"
   :description "lein check && lein kibit && lein eastwood && lein bikeshed"
   :url "http://lein-checkall.itang.me"
   :license {:name "Eclipse Public License"
